@@ -32,40 +32,120 @@
         .projects {
             display: flex;
             flex-wrap: wrap;
+            justify-content: space-around; /* Adjust spacing between items */
+            gap: 20px; /* Adjust space between items */
         }
         .project {
-            margin: 10px;
-            text-align: center;
+            flex: 0 1 calc(30% - 20px); /* Adjust the width of each project */
+            margin-bottom: 20px; /* Adjust the spacing between projects */
+            text-align: center; /* Center align content */
         }
         .project img {
-            width: 200px;
-            height: 150px;
-            object-fit: cover;
+            max-width: 100%; /* Ensure image does not exceed its container */
+            height: auto; /* Maintain aspect ratio */
         }
-        .project a {
-            text-decoration: none;
-            color: #000;
+        .cards_container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
         }
-        .project a:hover {
-            color: #4CAF50;
+        .card {
+            background-color: white;
+            overflow: hidden;
+            width: 30%;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.2s;
+        }
+        .card:hover img {
+            opacity: 0.8;
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .portfolio-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background-color: white;
+            border-radius: 2px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .modal-close img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .portfolio-header, .portfolio-content {
+            margin-bottom: 20px;
+        }
+
+        .portfolio-title-box {
+            text-align: center;
+        }
+
+        .portfolio-title {
+            margin: 0;
+        }
+
+        .portfolio-subtitle {
+            margin: 0;
+            color: #666;
         }
     </style>
 </head>
 <body>
     <div id="header"></div>
     <main>
-        <section id="projects">
-            <h2>Projects</h2>
-            <div class="projects">
-                <div class="project">
-                    <a href="projects/videodecoder/videodecoder.html">
-                        <img src="projects/videodecoder/Big_Buck_Bunny_bird_clip.jpg" alt="Project 1">
-                        <p>Writing a Video Decoder from Scratch; with hardware acceleration and multiprocessing</p>
-                    </a>
+        <h2 style="text-align: center; font-family: 'Raleway', Perpetua, Calibri, 'Trebuchet MS', sans-serif; font-size: 2em;">Projects</h2>
+        <div class="cards_container">
+            <!-- CARD -1-->
+            <figure style="cursor: pointer;" class="card">
+                <a class="portfolio-link">
+                    <img src="assets/videodecoder/Big_Buck_Bunny_bird_clip.jpg" width="100%" height="auto">
+                </a>
+                <figcaption>
+                    <h2>Hardware Accelerated Video Decoder</h2>
+                    <p class="portfolio-subtitle">A video decoder written from scratch using hardware acceleration and multiprocessing to maximize framerate</p>
+                </figcaption>   
+            </figure>
+            <!--Modal-->
+            <div class="portfolio-modal">
+                <button type="button" class="modal-close">
+                    <img class="close-svg" src="./assets/close button.svg" alt="Close">
+                </button>
+                <div class="portfolio-header">
+                    <div class="portfolio-title-box">
+                        <h2 class="portfolio-title">Hardware Accelerated Video Decoder</h2>
+                        <p class="portfolio-subtitle">A video decoder written from scratch using hardware acceleration and multiprocessing to maximize framerate</p>
+                    </div>
                 </div>
-                <!-- Add more projects as needed -->
+                <div class="portfolio-content">
+                    <div class="text-box">
+                        <p>Insert Content Here</p>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
     </main>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -77,6 +157,33 @@
                 .catch(error => {
                     console.error('Error fetching header:', error);
                 });
+            });
+    </script>
+    <script>
+        const portfolioLinks = document.querySelectorAll('.portfolio-link');
+        const modals = document.querySelectorAll('.portfolio-modal');
+        const closeButtons = document.querySelectorAll('.modal-close');
+
+        portfolioLinks.forEach((link, index) => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                modals[index].style.display = 'block';
+            });
+        });
+
+        closeButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                modals[index].style.display = 'none';
+            });
+        });
+
+        // Close modal when clicking outside of it
+        window.addEventListener('click', (event) => {
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>
