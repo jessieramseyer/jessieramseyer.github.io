@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>Resume</title>
+</head>
+<body>
+    <div id="header"></div>
+    <main>
+        <h2 style="text-align: center; font-family: 'Raleway', Perpetua, Calibri, 'Trebuchet MS', sans-serif; font-size: 2em;">Resume</h2>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error fetching header:', error);
+                });
+        });
+    </script>
+</body>
+</html>
