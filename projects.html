@@ -29,56 +29,77 @@
         main {
             padding: 20px;
         }
-        .projects {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around; /* Adjust spacing between items */
-            gap: 20px; /* Adjust space between items */
-        }
-        .project {
-            flex: 0 1 calc(30% - 20px); /* Adjust the width of each project */
-            margin-bottom: 20px; /* Adjust the spacing between projects */
-            text-align: center; /* Center align content */
-        }
-        .project img {
-            max-width: 100%; /* Ensure image does not exceed its container */
-            height: auto; /* Maintain aspect ratio */
-        }
         .cards_container {
+            width: auto;
+            max-width: 100%;
             display: flex;
+            flex-direction: row;
             flex-wrap: wrap;
-            gap: 20px;
+            justify-content: center; /* Center the content horizontally */
+            padding: 15px 0;
+            margin: 0 auto; /* Center the container itself */
         }
+
         .card {
-            background-color: white;
-            overflow: hidden;
-            width: 30%;
-            cursor: pointer;
-            position: relative;
-            transition: transform 0.2s;
+            width: calc((100% - 60px) / 3); /* Adjusted for three cards with 20px gap each */
+            min-width: 190px;
+            margin: 0 10px 20px; /* Adjust margins to create gaps between cards */
+            display: flex;
+            flex-direction: column; /* Ensures figcaption is below the image */
+            overflow: hidden; /* Ensure content doesn't overflow */
         }
+
+        .card img {
+            aspect-ratio: 1 / 0.75;
+            object-fit: cover; /* Ensures the image covers the entire card without distortion */
+            display: block;
+        }
+
+        @media (min-width: 651px) and (max-width: 749px) {
+            .cards_container {
+                grid-template-columns: repeat(2, 1fr); /* Two columns */
+            }
+        }
+
+        @media (max-width: 650px) {
+            .cards_container {
+                grid-template-columns: 1fr; /* One column */
+            }
+        }
+
         .card:hover img {
             opacity: 0.8;
         }
+
+        figcaption {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 15px;
+        }
+
         .card img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover; /* Ensures the image covers the entire card without distortion */
             display: block;
         }
+
         .portfolio-modal {
-            display: none;
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            height: 80%;
-            background-color: white;
-            border-radius: 2px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            padding: 20px;
-            overflow: auto;
+            z-index: 10;
+            top: 2em;
+            bottom: 0;
+            left: 12em;
+            right: 12em;
+            background: white;
+            box-shadow: 0px 0px 30px 2em rgba(0, 0, 0, 0.5);
+            overflow-y: scroll;
+            overflow-x: hidden;
+            overflow: overlay;
+            cursor: default;
+            display: none;
         }
 
         .modal-close {
@@ -94,7 +115,7 @@
             width: 24px;
             height: 24px;
         }
-
+        
         .portfolio-header, .portfolio-content {
             margin-bottom: 20px;
         }
@@ -119,14 +140,14 @@
         <h2 style="text-align: center; font-family: 'Raleway', Perpetua, Calibri, 'Trebuchet MS', sans-serif; font-size: 2em;">Projects</h2>
         <div class="cards_container">
             <!-- CARD 1-->
-            <figure style="cursor: pointer;" class="card">
+            <figure class="card">
                 <a class="portfolio-link">
-                    <img src="assets/hawaiirobotics/capstone.png" width="100%" height="auto">
+                    <img src="assets/hawaiirobotics/capstone.png" alt="Hawaii Robotics">
                 </a>
                 <figcaption>
                     <h2>Hawaii Robotics</h2>
                     <p class="portfolio-subtitle">An adaptive manufacturing robot that can learn to complete any task shown to it</p>
-                </figcaption>   
+                </figcaption>
             </figure>
             <!--Modal-->
             <div class="portfolio-modal">
@@ -145,16 +166,15 @@
                     </div>
                 </div>
             </div>
-                       
-            <!-- CARD 1-->
-            <figure style="cursor: pointer;" class="card">
+            <!-- CARD 2-->
+            <figure class="card">
                 <a class="portfolio-link">
-                    <img src="assets/videodecoder/Big_Buck_Bunny_bird_clip.jpg" width="100%" height="auto">
+                    <img src="assets/videodecoder/Big_Buck_Bunny_bird_clip.jpg" alt="Hardware Accelerated Video Decoder">
                 </a>
                 <figcaption>
                     <h2>Hardware Accelerated Video Decoder</h2>
                     <p class="portfolio-subtitle">A video decoder written from scratch using hardware acceleration and multiprocessing to maximize framerate</p>
-                </figcaption>   
+                </figcaption>
             </figure>
             <!--Modal-->
             <div class="portfolio-modal">
@@ -173,15 +193,15 @@
                     </div>
                 </div>
             </div>
-            <!-- CARD 2-->
-            <figure style="cursor: pointer;" class="card">
+            <!-- CARD 3-->
+            <figure class="card">
                 <a class="portfolio-link">
-                    <img src="assets/throwbot/throwbot.jpg" width="100%" height="auto">
+                    <img src="assets/throwbot/throwbot.jpg" alt="ThrowBot">
                 </a>
                 <figcaption>
                     <h2>ThrowBot</h2>
                     <p class="portfolio-subtitle">A robot built to </p>
-                </figcaption>   
+                </figcaption>
             </figure>
             <!--Modal-->
             <div class="portfolio-modal">
@@ -212,9 +232,8 @@
                 .catch(error => {
                     console.error('Error fetching header:', error);
                 });
-            });
-    </script>
-    <script>
+        });
+
         const portfolioLinks = document.querySelectorAll('.portfolio-link');
         const modals = document.querySelectorAll('.portfolio-modal');
         const closeButtons = document.querySelectorAll('.modal-close');
